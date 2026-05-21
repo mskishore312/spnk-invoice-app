@@ -1,0 +1,26 @@
+name: spnk_invoice
+description: SPNK Granites Invoice Generator
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.6.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+  pdf: ^3.11.2
+  path_provider: ^2.1.5
+  share_plus: ^10.1.4
+  printing: ^5.13.4
+  intl: ^0.19.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/
