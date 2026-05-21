@@ -3,8 +3,7 @@ import 'package:razorpay_flutter/razorpay_flutter.dart';
 import '../services/subscription_service.dart';
 
 class SubscriptionScreen extends StatefulWidget {
-  final VoidCallback onSubscribed;
-  const SubscriptionScreen({super.key, required this.onSubscribed});
+  const SubscriptionScreen({super.key});
 
   @override
   State<SubscriptionScreen> createState() => _SubscriptionScreenState();
@@ -66,10 +65,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
     );
     setState(() => _loading = false);
     if (mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Subscription activated! Welcome to Kanakku Pulla.'), backgroundColor: Color(0xFF1B5E20)),
-      );
-      widget.onSubscribed();
+      Navigator.of(context).pushNamedAndRemoveUntil('/home', (route) => false);
     }
   }
 
@@ -96,7 +92,6 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
           child: Column(
             children: [
               const SizedBox(height: 30),
-              // Logo
               Container(
                 padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
@@ -110,43 +105,27 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
               const SizedBox(height: 4),
               Text('Smart Invoice Generator', style: TextStyle(fontSize: 14, color: Colors.grey[600])),
               const SizedBox(height: 30),
-
-              // Features
               _featureItem(Icons.picture_as_pdf, 'GST-Compliant PDF Invoices'),
               _featureItem(Icons.calculate, 'Auto CBM Calculator'),
               _featureItem(Icons.share, 'Print & Share Instantly'),
               _featureItem(Icons.storage, 'Unlimited Invoices'),
               _featureItem(Icons.autorenew, 'UPI Autopay - Cancel Anytime'),
               const SizedBox(height: 30),
-
-              // Monthly Plan
               _planCard(
-                title: 'Monthly',
-                price: '₹399',
-                period: '/month',
-                subtitle: 'Flexible monthly billing',
-                highlight: false,
+                title: 'Monthly', price: '₹399', period: '/month',
+                subtitle: 'Flexible monthly billing', highlight: false,
                 onTap: () => _subscribe(false),
               ),
               const SizedBox(height: 12),
-
-              // Yearly Plan
               _planCard(
-                title: 'Yearly',
-                price: '₹3,999',
-                period: '/year',
-                subtitle: 'Save 17% — just ₹333/month',
-                highlight: true,
+                title: 'Yearly', price: '₹3,999', period: '/year',
+                subtitle: 'Save 17% — just ₹333/month', highlight: true,
                 onTap: () => _subscribe(true),
               ),
               const SizedBox(height: 20),
-
-              if (_loading)
-                const CircularProgressIndicator(color: Color(0xFF1B5E20)),
-
+              if (_loading) const CircularProgressIndicator(color: Color(0xFF1B5E20)),
               const SizedBox(height: 16),
-              Text('Powered by Razorpay • Secure UPI Autopay',
-                style: TextStyle(fontSize: 11, color: Colors.grey[500])),
+              Text('Powered by Razorpay • Secure UPI Autopay', style: TextStyle(fontSize: 11, color: Colors.grey[500])),
             ],
           ),
         ),
@@ -166,12 +145,8 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
   }
 
   Widget _planCard({
-    required String title,
-    required String price,
-    required String period,
-    required String subtitle,
-    required bool highlight,
-    required VoidCallback onTap,
+    required String title, required String price, required String period,
+    required String subtitle, required bool highlight, required VoidCallback onTap,
   }) {
     return GestureDetector(
       onTap: _loading ? null : onTap,

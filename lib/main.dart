@@ -17,7 +17,12 @@ class KanakkuPullaApp extends StatelessWidget {
         colorSchemeSeed: const Color(0xFF1B5E20),
         useMaterial3: true,
       ),
-      home: const SplashScreen(),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const SplashScreen(),
+        '/subscribe': (context) => const SubscriptionScreen(),
+        '/home': (context) => const HomeScreen(),
+      },
     );
   }
 }
@@ -39,11 +44,11 @@ class _SplashScreenState extends State<SplashScreen> {
     await Future.delayed(const Duration(seconds: 2));
     if (!mounted) return;
     final subscribed = await SubscriptionService.isSubscribed();
-    Navigator.pushReplacement(context, MaterialPageRoute(
-      builder: (_) => subscribed ? const HomeScreen() : SubscriptionScreen(
-        onSubscribed: () => Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const HomeScreen())),
-      ),
-    ));
+    if (subscribed) {
+      Navigator.of(context).pushReplacementNamed('/home');
+    } else {
+      Navigator.of(context).pushReplacementNamed('/subscribe');
+    }
   }
 
   @override
