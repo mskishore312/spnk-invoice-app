@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'screens/invoice_form.dart';
+import 'screens/template_selector.dart';
 import 'screens/subscription_screen.dart';
 import 'services/subscription_service.dart';
 
@@ -130,7 +131,7 @@ class HomeScreen extends StatelessWidget {
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                   ),
                   onPressed: () => Navigator.push(context,
-                    MaterialPageRoute(builder: (_) => const InvoiceFormScreen())),
+                    MaterialPageRoute(builder: (_) => const TemplateSelectorScreen())),
                 ),
               ),
             ],

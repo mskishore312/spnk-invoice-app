@@ -1,3 +1,4 @@
+import '../models/invoice_template.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../models/invoice.dart';
@@ -5,7 +6,8 @@ import '../services/pdf_generator.dart';
 import 'package:printing/printing.dart';
 
 class InvoiceFormScreen extends StatefulWidget {
-  const InvoiceFormScreen({super.key});
+  final dynamic template;
+  const InvoiceFormScreen({super.key, required this.template});
   @override
   State<InvoiceFormScreen> createState() => _InvoiceFormScreenState();
 }
@@ -222,7 +224,7 @@ class _InvoiceFormScreenState extends State<InvoiceFormScreen> {
 
   Future<void> _generatePdf() async {
     if (_sameAsConsignee) inv.copyBuyerToDelivery();
-    final pdfBytes = await PdfGenerator.generate(inv);
+    final pdfBytes = await PdfGenerator.generate(inv, widget.template as InvoiceTemplate);
     if (!mounted) return;
     await Printing.layoutPdf(onLayout: (_) async => pdfBytes);
   }
